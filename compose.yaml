@@ -1,0 +1,14 @@
+services:
+  mumble:
+    container_name: mumble
+    image: mumblevoip/mumble-server:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - "./data/mumble:/data"
+      - "/etc/letsencrypt/live/mumble.${CUSTOM_DOMAIN}/fullchain.pem:/certificates/fullchain.pem"
+      - "/etc/letsencrypt/live/mumble.${CUSTOM_DOMAIN}/privkey.pem:/certificates/privkey.pem"
+    ports:
+      - "${MUMBLE_CONFIG_PORT}:${MUMBLE_CONFIG_PORT}"
+    user: root
